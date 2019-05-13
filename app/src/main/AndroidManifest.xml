@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.projectui">
 
-
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission. ACCESS_COARSE_LOCATION" />
@@ -19,16 +17,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-
         <activity
             android:name=".DonorsMap"
-            android:label="@string/title_activity_doners"></activity>
+            android:label="@string/title_activity_doners" />
         <activity android:name=".DonnersLists" />
         <activity
             android:name=".getLocation"
             android:theme="@android:style/Theme.Holo.Light.Dialog" />
         <activity android:name=".Profile" />
-        <activity android:name=".SignUpAccount" />
+
+        <activity android:name=".SignUpAccount" >
+
+
+
+        </activity>
+
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
@@ -37,11 +40,12 @@
             android:name=".Splash"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".HomeActivity"
