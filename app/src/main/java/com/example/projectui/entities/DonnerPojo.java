@@ -2,22 +2,21 @@ package com.example.projectui.entities;
 
 public class DonnerPojo {
 
-   private String name,Mobile,governorate,gender,bloodType,date,PaymentType,longitude,latitude;
+   private String name, mobile,email,age,time,gender,bloodType, country, PaymentType,longitude,latitude;
 
-
-   public DonnerPojo(String name, String mobile, String governorate, String gender, String bloodType, String date, String paymentType, String longitude, String latitude) {
+   public DonnerPojo(String name, String mobile, String email, String age, String time, String gender, String bloodType, String country, String paymentType, String longitude, String latitude) {
       this.name = name;
-      this.Mobile = mobile;
-      this.governorate = governorate;
+      this.mobile = mobile;
+      this.email = email;
+      this.age = age;
+      this.time = time;
       this.gender = gender;
       this.bloodType = bloodType;
-      this.date = date;
+      this.country = country;
       this.PaymentType = paymentType;
       this.longitude = longitude;
       this.latitude = latitude;
    }
-
-
 
    public String getName() {
       return name;
@@ -28,19 +27,35 @@ public class DonnerPojo {
    }
 
    public String getMobile() {
-      return Mobile;
+      return mobile;
    }
 
    public void setMobile(String mobile) {
-      Mobile = mobile;
+      this.mobile = mobile;
    }
 
-   public String getGovernorate() {
-      return governorate;
+   public String getEmail() {
+      return email;
    }
 
-   public void setGovernorate(String governorate) {
-       governorate = governorate;
+   public void setEmail(String email) {
+      this.email = email;
+   }
+
+   public String getAge() {
+      return age;
+   }
+
+   public void setAge(String age) {
+      this.age = age;
+   }
+
+   public String getTime() {
+      return time;
+   }
+
+   public void setTime(String time) {
+      this.time = time;
    }
 
    public String getGender() {
@@ -59,12 +74,12 @@ public class DonnerPojo {
       this.bloodType = bloodType;
    }
 
-   public String getdate() {
-      return date;
+   public String getCountry() {
+      return country;
    }
 
-   public void setdate(String date) {
-      date = date;
+   public void setCountry(String country) {
+      this.country = country;
    }
 
    public String getPaymentType() {

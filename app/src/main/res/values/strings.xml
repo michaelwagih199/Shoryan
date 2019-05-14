@@ -25,6 +25,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="help">نداء الاستغاثة</string>
 
+
     <string name="bloodType_prompt">فصيلة الدم</string>
     <string-array name="blood_type">
         <item>A+</item>
@@ -36,6 +37,70 @@
         <item>AB+</item>
         <item>AB-</item>
     </string-array>
+
+    <string name="et">يجب على المتبرع الحصول على شهادة صحية من المستشفيات او معامل التحاليل تفيد بأنة خالى من الامراض وأن دمة صالح لتبرع بالدم</string>
+    <string-array name="countries">
+        <item>محافظة الوادي الجديد</item>
+
+        <item> محافظة مطروح</item>
+
+        <item> محافظة البحر </item>
+
+        <item> محافظة الجيزة
+ </item>
+        <item> محافظة جنوب سيناء
+ </item>
+        <item> محافظة شمال سيناء
+ </item>
+        <item> محافظة السويس
+ </item>
+        <item> محافظة البحيرة
+ </item>
+        <item> محافظة حلوان
+ </item>
+        <item> محافظة الشرقيّة
+ </item>
+        <item> محافظة الدقهليّة
+ </item>
+        <item> محافظة كفر الشيخ
+ </item>
+        <item> محافظة الإسكندريّة
+ </item>
+        <item> محافظة المنوفيّة
+ </item>
+        <item> محافظة المنيا
+ </item>
+        <item> محافظة الغربيّة
+ </item>
+        <item> محافظة الفيوم
+ </item>
+        <item> محافظة قنا
+ </item>
+        <item> محافظة أسيوط
+ </item>
+        <item> محافظة سوهاج
+ </item>
+        <item> محافظة الإسماعيليّة
+</item>
+        <item> محافظة بني سويف
+ </item>
+        <item> محافظة القليوبيّة
+ </item>
+        <item>محافظة أسوان</item>
+
+        <item> محافظة دمياط
+ </item>
+        <item> محافظة القاهرة
+ </item>
+        <item> محافظة بورسعيد
+ </item>
+        <item> محافظة الأقصر
+ </item>
+        <item> محافظة السادس من أكتوبر
+</item>
+    </string-array>
+
+
     <string name="weHeadin">ﻣﻦ ﻧﺤﻦ:</string>
     <string name="weInfo">ﻧﺤﻦ ﻣﺠﻤﻮﻋﺔ ﻣﻦ اﻟﺸﺒﺎب ﻻنتبع ﻷي ﺟﻬﺔ رﺳﻤﯿﺔ نوﻣﻦ ﺑﺄن اﻟﺘﺒﺮع ﺑﺎﻟﺪم ﺿﺮورة ﻹﻧﻘﺎذ ﺣﯿﺎة اﻟﻤﺮﺿﻰ وﻧﻌﻤﻞ ﻋﻠﻰ ﻧﺸﺮ ﺛﻘﺎﻓﺔ اﻟﺘﺒﺮع ﺑﺎﻟﺪم وﻋﻠﻰ اﻟﻘﯿﺎم ﺑﺪور اﻟﻮﺳﯿﻂ ﺑﯿﻦ  اﻟﻤﺮﺿﻰ واﻟﻤﺘﺒﺮﻋﯿﻦ ﺗﺴﻬﯿﻼ ﻋﻠﻰ ذوﯾﻬﻢ ﻣﻬﻤﺔ اﻟﺒﺤﺚ ﻋﻦ ﻣﺘﺒﺮع ﺧﺼﻮﺻﺎ ﻓﺌﺎت اﻟﺪم اﻟﻨﺎدرة</string>
     <string name="hadfnaHeadin">ﻫﺪﻓﻨﺎ:</string>
@@ -217,12 +282,6 @@
 تلقائيا بعد فتره وجيزه
     </string>
     <string name="title_activity_doners">Map</string>
-
-
-
-
-
-
 
 
     <!-- Sign-in status messages -->

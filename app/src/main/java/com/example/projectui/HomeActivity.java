@@ -15,6 +15,9 @@ import com.example.projectui.inhomefragments.InfoFragment;
 import com.example.projectui.inhomefragments.PersonalFragment;
 import com.example.projectui.inhomefragments.SearchFragment;
 import com.example.projectui.inhomefragments.ShareFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import static com.example.projectui.base.BaseFragment.FRAGMENT_ADD_DONOR;
 import static com.example.projectui.base.BaseFragment.FRAGMENT_BANKS;
@@ -27,6 +30,7 @@ import static com.example.projectui.base.BaseFragment.FRAGMENT_SEARCH;
 
 public class HomeActivity extends BaseActivity
         implements HomeFragment.HomeFragmentInterface{
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -65,6 +69,8 @@ public class HomeActivity extends BaseActivity
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         addFragment(new HomeFragment(), false);
+
+
     }
 
     @Override

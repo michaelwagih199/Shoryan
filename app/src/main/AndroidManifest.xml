@@ -16,7 +16,8 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".addImag"
+            android:theme="@android:style/Theme.Holo.Light.Dialog"></activity>
         <activity
             android:name=".DonorsMap"
             android:label="@string/title_activity_doners" />
@@ -25,13 +26,7 @@
             android:name=".getLocation"
             android:theme="@android:style/Theme.Holo.Light.Dialog" />
         <activity android:name=".Profile" />
-
-        <activity android:name=".SignUpAccount" >
-
-
-
-        </activity>
-
+        <activity android:name=".SignUpAccount"></activity>
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
@@ -40,12 +35,11 @@
             android:name=".Splash"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".HomeActivity"

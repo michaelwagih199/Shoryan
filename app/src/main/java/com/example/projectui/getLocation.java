@@ -207,12 +207,8 @@ public class getLocation extends Activity
     @Override
     public void onLocationChanged(Location location) {
         if (location != null) {
-            try {
-                locationTv.setText("Latitude : " + location.getLatitude() + "\nLongitude : " + location.getLongitude()+"\n Governorate" + getAddres().get(2));
-                saveData(String.valueOf(location.getLatitude()),String.valueOf(location.getLongitude()),getAddres().get(2));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            locationTv.setText("Latitude : " + location.getLatitude() + "\nLongitude : " + location.getLongitude());
+            saveData(String.valueOf(location.getLatitude()),String.valueOf(location.getLongitude()));
 
         }
     }
@@ -255,12 +251,12 @@ public class getLocation extends Activity
         }
     }
 
-    public  void saveData(String Latitude,String Longitude, String governrate ) {
+    public  void saveData(String Latitude,String Longitude ) {
         SharedPreferences sp = getSharedPreferences("SHARE", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("Latitude", Latitude);
         editor.putString("Longitude", Longitude);
-        editor.putString("governrate", governrate);
+//        editor.putString("governrate", governrate);
         editor.commit();
     }
 

@@ -39,6 +39,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -47,9 +48,7 @@ import java.util.List;
 public class AddDonorFragment extends BaseFragment {
 
 
-
     private static final String TAG = "SelectImageActivity";
-
     private static final int REQUEST_CODE_IMAGE = 100;
     private static final int REQUEST_CODE_PERMISSIONS = 101;
 
@@ -69,16 +68,12 @@ public class AddDonorFragment extends BaseFragment {
     }
 
 
-    TextView txtVdate;
-    EditText etMob, etName;
+    EditText etMob, etName, et_email, et_age, et_time, et_mobile;
     RadioButton radioMale, radioFemale, radioFree, radiopaid;
-    CalendarView calendar;
-    Spinner spinnerBlodType;
+    Spinner spinnerBlodType, spinnerCountry;
+    String gender,bloodType, country, PaymentType;
 
-    String name, Mobile, gender, bloodType, Date, PaymentType;
-
-
-    private DatabaseReference databaseReference;
+    private DatabaseReference mDatabase;
     private FirebaseAuth firebaseAuth;
 
     View view;
@@ -86,33 +81,44 @@ public class AddDonorFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //getting current user
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        firebaseAuth = FirebaseAuth.getInstance();
 
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_add_donor, container, false);
 
+
+        try {
+            mDatabase = FirebaseDatabase.getInstance().getReference();
+            firebaseAuth = FirebaseAuth.getInstance();
+        } catch (Exception e) {
+          Log.e("tag",e.getMessage());
+        }
 
         if (savedInstanceState != null) {
             mPermissionRequestCount =
                     savedInstanceState.getInt(KEY_PERMISSIONS_REQUEST_COUNT, 0);
         }
 
-        etName = (EditText) view.findViewById(R.id.et_name);
-        etMob = view.findViewById(R.id.et_mobile);
-        radioFemale = view.findViewById(R.id.radioBtn_female);
-        radioMale = view.findViewById(R.id.radioBtn_male);
-        radioFree = view.findViewById(R.id.radioBtn_paymentFree);
-        radiopaid = view.findViewById(R.id.radioBtn_paymentPaid);
-        calendar = view.findViewById(R.id.calendar);
-        spinnerBlodType = view.findViewById(R.id.spinnerBloodType);
-        txtVdate = view.findViewById(R.id.txtVdate);
+        etName =(EditText) view.findViewById(R.id.et_name);
+        etMob = (EditText)view.findViewById(R.id.et_mobile);
+        et_email = (EditText) view.findViewById(R.id.et_email);
+        et_age = (EditText) view.findViewById(R.id.et_age);
+        et_time = (EditText) view.findViewById(R.id.et_time);
+        et_mobile = (EditText)  view.findViewById(R.id.et_mobile);
+
+        radioFemale = (RadioButton) view.findViewById(R.id.radioBtn_female);
+        radioMale = (RadioButton) view.findViewById(R.id.radioBtn_male);
+        radioFree = (RadioButton) view.findViewById(R.id.radioBtn_paymentFree);
+        radiopaid = (RadioButton) view.findViewById(R.id.radioBtn_paymentPaid);
+
+        spinnerBlodType = (Spinner) view.findViewById(R.id.spinnerBloodType);
+        spinnerCountry = (Spinner) view.findViewById(R.id.spinnerCountry);
 
         // Make sure the app has correct permissions to run
         requestPermissionsIfNecessary();
 
         // Create request to get image from filesystem when button clicked
         view.findViewById(R.id.btn_upload_file)
+
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -123,24 +129,14 @@ public class AddDonorFragment extends BaseFragment {
                     }
                 });
 
-        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month,
-                                            int dayOfMonth) {
-                // TODO Auto-generated method stub
-
-                txtVdate.setText(dayOfMonth + " / " + (month + 1) + " / " + year);
-
-
-            }
-        });
-
-
+        //initialize variable from views
         bloodType = spinnerBlodType.getSelectedItem().toString();
-        radioData();
+        country = spinnerCountry.getSelectedItem().toString();
 
-        Intent i =  new Intent(getContext(), getLocation.class);
+
+
+
+        Intent i = new Intent(getContext(), getLocation.class);
         startActivity(i);
 
         // submitResult
@@ -149,12 +145,16 @@ public class AddDonorFragment extends BaseFragment {
                     @Override
                     public void onClick(View v) {
                         try {
+
+                            radioData();
                             addDonner(etName.getText().toString(),
                                     etMob.getText().toString(),
-                                    getData()[2],
+                                    et_email.getText().toString(),
+                                    et_age.getText().toString(),
+                                    et_time.getText().toString(),
                                     gender,
                                     bloodType,
-                                    txtVdate.getText().toString(),
+                                    country,
                                     PaymentType,
                                     getData()[1],
                                     getData()[0]);
@@ -166,36 +166,38 @@ public class AddDonorFragment extends BaseFragment {
                     }
                 });
 
-
-
-
         return view;
     }
 
-    public void addDonner(String name, String mobile, String governorate, String gender, String bloodType, String date, String paymentType, String longitude, String latitude) {
-        DonnerPojo donner = new DonnerPojo(name, mobile, governorate, gender, bloodType, date, paymentType, longitude, latitude);
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        databaseReference.child("Donors").child(name).setValue(donner);
-        toastMessage("تم الحفظ");
+    public String generateCode() {
+        // Creating a random UUID (Universally unique identifier).
+        UUID uuid = UUID.randomUUID();
+        return uuid.toString();
 
+    }
+
+
+    public void addDonner(String name, String mobile, String email, String age, String time, String gender, String bloodType, String country, String paymentType, String longitude, String latitude) {
+        DonnerPojo donner = new DonnerPojo(name, mobile, email, age, time, gender, bloodType, country, paymentType, longitude, latitude);
+        mDatabase.child("Donors").child(name).setValue(donner);
+        toastMessage("تم الحفظ");
     }
 
 
     public void radioData() {
-
         if (radioMale.isChecked()) {
             gender = "male";
         } else if (radioFemale.isChecked()) {
             gender = "male";
-        } else if (radiopaid.isChecked()){
+        } else if (radiopaid.isChecked()) {
             PaymentType = "paid";
-        }else if (radioFree.isChecked()){
+        } else if (radioFree.isChecked()) {
             PaymentType = "free";
         } else
             Toast.makeText(getContext(), "not check", Toast.LENGTH_LONG).show();
     }
 
-     /**
+    /**
      * Save the permission request count on a rotate
      **/
 
@@ -237,12 +239,12 @@ public class AddDonorFragment extends BaseFragment {
     }
 
     //get user name from sharedprefrence
-    public  String[] getData(){
+    public String[] getData() {
         SharedPreferences sp = this.getActivity().getSharedPreferences("SHARE", Activity.MODE_PRIVATE);
         String Latitude = sp.getString("Latitude", "check location");
         String Longitude = sp.getString("Longitude", "check location");
         String governrate = sp.getString("governrate", "check location");
-        String[] result = {Latitude ,Longitude,governrate};
+        String[] result = {Latitude, Longitude, governrate};
         return result;
     }
 
