@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projectui.R;
+import com.example.projectui.addImag;
 import com.example.projectui.base.BaseFragment;
 import com.example.projectui.entities.DonnerPojo;
 import com.example.projectui.getLocation;
@@ -47,11 +48,9 @@ import java.util.UUID;
  */
 public class AddDonorFragment extends BaseFragment {
 
-
     private static final String TAG = "SelectImageActivity";
     private static final int REQUEST_CODE_IMAGE = 100;
     private static final int REQUEST_CODE_PERMISSIONS = 101;
-
     private static final String KEY_PERMISSIONS_REQUEST_COUNT = "KEY_PERMISSIONS_REQUEST_COUNT";
     private static final int MAX_NUMBER_REQUEST_PERMISSIONS = 3;
 
@@ -122,10 +121,8 @@ public class AddDonorFragment extends BaseFragment {
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent chooseIntent = new Intent(
-                                Intent.ACTION_PICK,
-                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        startActivityForResult(chooseIntent, REQUEST_CODE_IMAGE);
+                        Intent i = new Intent(getContext(),addImag.class);
+                        startActivity(i);
                     }
                 });
 
@@ -173,7 +170,6 @@ public class AddDonorFragment extends BaseFragment {
         // Creating a random UUID (Universally unique identifier).
         UUID uuid = UUID.randomUUID();
         return uuid.toString();
-
     }
 
 
@@ -247,7 +243,6 @@ public class AddDonorFragment extends BaseFragment {
         String[] result = {Latitude, Longitude, governrate};
         return result;
     }
-
 
     /**
      * customizable toast

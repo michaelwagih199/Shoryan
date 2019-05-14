@@ -1,5 +1,6 @@
 package com.example.projectui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -47,8 +48,15 @@ public class HomeActivity extends BaseActivity
                     return true;
 
                 case R.id.navigation_share:
-                    addFragment(new ShareFragment(), true);
-                    return true;
+
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT,
+                            "Hey check out my app at: https://play.google.com/store/apps/details?id=com.google.android.apps.plus");
+                    sendIntent.setType("text/plain");
+                    startActivity(sendIntent);
+
+               return true;
 
                 case R.id.navigation_personal:
                     addFragment(new PersonalFragment(), true);

@@ -6,10 +6,7 @@ package com.example.projectui.entities;
 
 public class DonorInfomation {
 
-    private String name;
-    private String mobile;
-    private String governorate,date,bloodType;
-    private double latitude,longitude;
+    private String name, mobile,email,age,time,gender,bloodType, country, PaymentType,longitude,latitude;
 
     public DonorInfomation(){
 
@@ -31,20 +28,36 @@ public class DonorInfomation {
         this.mobile = mobile;
     }
 
-    public String getGovernorate() {
-        return governorate;
+    public String getEmail() {
+        return email;
     }
 
-    public void setGovernorate(String governorate) {
-        this.governorate = governorate;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getDate() {
-        return date;
+    public String getAge() {
+        return age;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getBloodType() {
@@ -55,20 +68,35 @@ public class DonorInfomation {
         this.bloodType = bloodType;
     }
 
-
-    public double getLatitude() {
-        return latitude;
+    public String getCountry() {
+        return country;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public double getLongitude() {
+    public String getPaymentType() {
+        return PaymentType;
+    }
+
+    public void setPaymentType(String paymentType) {
+        PaymentType = paymentType;
+    }
+
+    public String getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
     }
 }

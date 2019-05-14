@@ -1,23 +1,21 @@
 package com.example.projectui.inhomefragments;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.projectui.DonnersLists;
-import com.example.projectui.DonorsMap;
 import com.example.projectui.R;
 import com.example.projectui.base.BaseFragment;
-
-import java.util.ArrayList;
 
 
 /**
@@ -26,11 +24,14 @@ import java.util.ArrayList;
 public class SearchFragment extends BaseFragment {
 
 
-
     public SearchFragment() {
         // Required empty public constructor
     }
 
+
+    String country, paidType, method;
+    Spinner spinnerCountry;
+    RadioButton radioFree, radiopaid , radioBtn_lists,radioBtn_maps;
     View view;
 
     @Override
@@ -39,23 +40,28 @@ public class SearchFragment extends BaseFragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        // Create request to get image from filesystem when button clicked
-        view.findViewById(R.id.iv__menus)
+        radioFree = (RadioButton) view.findViewById(R.id.radioBtn_paymentFree);
+        radiopaid = (RadioButton) view.findViewById(R.id.radioBtn_paymentPaid);
+
+        radioBtn_lists = (RadioButton) view.findViewById(R.id.radioBtn_lists);
+        radioBtn_maps = (RadioButton) view.findViewById(R.id.radioBtn_maps);
+
+        spinnerCountry = (Spinner) view.findViewById(R.id.spinnerCountry);
+
+
+        view.findViewById(R.id.btnSearch)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                       Intent i = new Intent(getContext(), DonnersLists.class);
-                       startActivity(i);
 
-                    }
-                });
-        view.findViewById(R.id.iv_map)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(getContext(), DonorsMap.class);
-                        startActivity(i);
-
+                        try {
+                            country = spinnerCountry.getSelectedItem().toString();
+                            radioData();
+                            Intent i = new Intent(getContext(), DonnersLists.class);
+                            startActivity(i);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
 
@@ -63,6 +69,42 @@ public class SearchFragment extends BaseFragment {
         return view;
     }
 
+    public void radioData() {
+        if (radiopaid.isChecked()) {
+            paidType = "paid";
+        } else if (radioFree.isChecked()) {
+            paidType = "free";
+        } else if (radioBtn_lists.isChecked()){
+            method = "list";
+        }else if (radioBtn_maps.isChecked()){
+            method = "maps";
+        }
+        else {
+            Toast.makeText(getContext(), "not check", Toast.LENGTH_LONG).show();
+        }
+
+
+    }
+
+
+    public void showDialog() {
+        new AlertDialog.Builder(getContext())
+                .setTitle("تذكر اختيارك للبحث ")
+                .setMessage(country + "\n"+paidType+"\n"+method)
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+                    }
+                })
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .show();
+    }
 
 
 }

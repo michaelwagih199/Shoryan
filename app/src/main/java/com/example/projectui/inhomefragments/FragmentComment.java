@@ -10,11 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.projectui.R;
 import com.example.projectui.base.BaseFragment;
+import com.example.projectui.entities.CommentsPojo;
 import com.example.projectui.entities.CommentsPojoAdd;
+import com.example.projectui.entities.DonorInfomation;
+import com.example.projectui.entities.MyListAdapter;
+import com.example.projectui.entities.PostAdapters;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,6 +28,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,10 +42,20 @@ public class FragmentComment extends BaseFragment {
         // Required empty public constructor
     }
 
+    //add Firebase Database stuff
+    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference databaseReference;
+
     private FirebaseAuth firebaseAuth;
     String curentUser;
+    String userEmail;
+    ListView listVComments;
+    int likeCounter = 0;
+    boolean isUserLike = false;
+
+
     View view;
+    ArrayList<CommentsPojo> arrayList = new ArrayList<CommentsPojo>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,17 +64,27 @@ public class FragmentComment extends BaseFragment {
         view = inflater.inflate(R.layout.fragment_fragment_comment, container, false);
         //// TODO: 04/05/2019 make comments
 
-        //getting current user
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+        listVComments = (ListView) view.findViewById(R.id.listVComments);
+
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = mFirebaseDatabase.getReference();
+
         firebaseAuth = FirebaseAuth.getInstance();
+
+        getPostst();
+
+
         FirebaseUser user = firebaseAuth.getCurrentUser();
         curentUser = user.getUid();
+        userEmail = user.getEmail();
 
         view.findViewById(R.id.fab)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         AddCommentDialog();
+
+
                     }
                 });
 
@@ -64,6 +92,85 @@ public class FragmentComment extends BaseFragment {
         return view;
     }
 
+
+    public void getPostst() {
+        Query query = databaseReference.child("Posts").orderByChild("userId");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
+                        CommentsPojo note = issue.getValue(CommentsPojo.class);
+                        note.setUserId(userEmail);
+                        arrayList.add(note);
+                    }
+//                   Log.e("tttt",arrayList.get(0).getName()+""+arrayList.get(1).getName());
+                    PostAdapters customAdapter = new PostAdapters(getContext(), arrayList);
+                    listVComments.setAdapter(customAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("ram", databaseError.getDetails());
+            }
+        });
+    }
+
+
+    public void getLikeCounter() {
+
+        Query query = databaseReference.child("Posts").orderByChild("userId");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
+                        CommentsPojo note = issue.getValue(CommentsPojo.class);
+                        likeCounter = note.getLike_counter();
+                    }
+//                   Log.e("tttt",arrayList.get(0).getName()+""+arrayList.get(1).getName());
+                    PostAdapters customAdapter = new PostAdapters(getContext(), arrayList);
+                    listVComments.setAdapter(customAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("ram", databaseError.getDetails());
+            }
+        });
+
+
+    }
+
+    public boolean getIsUserLike() {
+        final boolean[] result = new boolean[1];
+        Query query = databaseReference.child("Posts").orderByChild("userId");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
+                        CommentsPojo note = issue.getValue(CommentsPojo.class);
+                        result[0] = note.isIs_user_like();
+                    }
+//                   Log.e("tttt",arrayList.get(0).getName()+""+arrayList.get(1).getName());
+                    PostAdapters customAdapter = new PostAdapters(getContext(), arrayList);
+                    listVComments.setAdapter(customAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("ram", databaseError.getDetails());
+            }
+        });
+        return result[0];
+    }
 
     public void AddCommentDialog() {
 
@@ -89,7 +196,11 @@ public class FragmentComment extends BaseFragment {
                                 // get user input and set it to result
                                 // edit text
                                 try {
-                                    addDonner(userInput.getText().toString());
+                                    getIsUserLike();
+                                    getLikeCounter();
+                                    addPost(userInput.getText().toString(), likeCounter, isUserLike);
+                                    arrayList.clear();
+                                    getPostst();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -112,39 +223,22 @@ public class FragmentComment extends BaseFragment {
     }
 
 
-    public void addDonner(String commentContent) {
+
+
+    public void addPost(String commentContent, int likeCounter, boolean isUserLike) {
         try {
-            Log.e("l",getCountComment()+"");
-            CommentsPojoAdd commentsPojoAdd = new CommentsPojoAdd(commentContent,curentUser);
-            databaseReference.child("Comments").child(String.valueOf(1)).setValue(commentsPojoAdd);
+            CommentsPojoAdd commentsPojoAdd = new CommentsPojoAdd(commentContent, curentUser, likeCounter, isUserLike);
+            databaseReference.child("Posts").child(generateCode()).setValue(commentsPojoAdd);
             toastMessage("تم الحفظ");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-
-    public String getCountComment(){
-
-        final String[] result = {"c"};
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
-        //You can use the single or the value.. depending if you want to keep track
-        Query query = myRef.child("Comments").orderByKey().limitToLast(1);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-               // String message = dataSnapshot.child("message").getValue().toString();
-                result[0] =  dataSnapshot.getValue().toString();
-
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-                Log.e("mm",database.toString());
-            }
-        });
-        return result[0];
+    public String generateCode() {
+        // Creating a random UUID (Universally unique identifier).
+        UUID uuid = UUID.randomUUID();
+        return uuid.toString();
     }
 
     /**

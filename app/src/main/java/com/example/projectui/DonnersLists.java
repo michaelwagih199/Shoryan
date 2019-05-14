@@ -64,7 +64,6 @@ public class DonnersLists extends AppCompatActivity {
                 if (dataSnapshot.exists()) {
 
                     for (DataSnapshot issue : dataSnapshot.getChildren()) {
-
                         DonorInfomation note = issue.getValue(DonorInfomation.class);
                         arrayList.add(note);
 
@@ -97,26 +96,6 @@ public class DonnersLists extends AppCompatActivity {
 
     }
 
-
-    private void showData(DataSnapshot dataSnapshot) {
-
-      for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
-            Log.e("snapShot", ds.child("Donors").getChildren().toString());
-
-            DonorInfomation donorInfomation = new DonorInfomation();
-            donorInfomation.setName(ds.child("mina").getValue(DonorInfomation.class).getName()); //set the name
-            donorInfomation.setBloodType(ds.child("mina").getValue(DonorInfomation.class).getBloodType()); //set the BloodType
-            donorInfomation.setDate(ds.child("mina").getValue(DonorInfomation.class).getDate()); //set the Date
-            donorInfomation.setMobile(ds.child("mina").getValue(DonorInfomation.class).getMobile()); //set the Mobile
-            donorInfomation.setGovernorate(ds.child("mina").getValue(DonorInfomation.class).getGovernorate()); //set the Mobile
-
-            arrayList.add(donorInfomation);
-            MyListAdapter customAdapter = new MyListAdapter(getApplicationContext(), arrayList);
-            mListView.setAdapter(customAdapter);
-        }
-
-    }
 
     /**
      * customizable toast

@@ -180,8 +180,8 @@
                 android:textAlignment="center"
                 android:entries="@array/blood_type"
                 android:prompt="@string/bloodType_prompt"
-
                 />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -204,30 +204,6 @@
 
                 />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/et"
-                android:textAlignment="textStart"
-                android:layout_marginTop="@dimen/dimen8"
-                android:layout_marginLeft="@dimen/dimen8"
-                android:layout_marginRight="@dimen/dimen8"
-                android:textColor="@color/colorAccentDark"
-                android:textSize="14sp" />
-
-                <Button
-                    android:id="@+id/btn_upload_file"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/ic_rounded_button"
-                    android:text="اختيار ملف"
-                    android:layout_marginRight="@dimen/dimen32"
-                    android:layout_marginLeft="@dimen/dimen32"
-                    android:textColor="@color/White"
-                    android:layout_marginTop="@dimen/dimen8"
-                    android:textStyle="bold" />
-
-
 
             <Button
                 android:id="@+id/btn_send"
@@ -237,8 +213,31 @@
                 android:layout_marginTop="@dimen/dimen8"
                 android:layout_marginRight="@dimen/dimen8"
                 android:background="@drawable/ic_rounded_button_green"
-                android:text="حفظ"
+                android:text="حفظ البيانات"
                 android:textSize="@dimen/dimen20"
+                android:textColor="@color/White"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen8"
+                android:layout_marginTop="@dimen/dimen8"
+                android:layout_marginRight="@dimen/dimen8"
+                android:text="@string/et"
+                android:textAlignment="textStart"
+                android:textColor="@color/colorAccentDark"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_upload_file"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen32"
+                android:layout_marginTop="@dimen/dimen8"
+                android:layout_marginRight="@dimen/dimen32"
+                android:background="@drawable/ic_rounded_button"
+                android:text="اختيار ملف"
                 android:textColor="@color/White"
                 android:textStyle="bold" />
         </LinearLayout>
