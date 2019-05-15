@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.projectui.DonnersLists;
+import com.example.projectui.DonorsMap;
 import com.example.projectui.R;
 import com.example.projectui.base.BaseFragment;
 
@@ -57,7 +58,7 @@ public class SearchFragment extends BaseFragment {
                         try {
                             country = spinnerCountry.getSelectedItem().toString();
                             radioData();
-                            Intent i = new Intent(getContext(), DonnersLists.class);
+                            Intent i = new Intent(getContext(), DonorsMap.class);
                             startActivity(i);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -82,7 +83,6 @@ public class SearchFragment extends BaseFragment {
         else {
             Toast.makeText(getContext(), "not check", Toast.LENGTH_LONG).show();
         }
-
 
     }
 
