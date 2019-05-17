@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 android:text="@string/Important_1_H"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 />
             <TextView
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="@string/Important_1_Info"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/Black"
                 android:layout_marginRight="@dimen/dimen8"
                 />
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 android:text="@string/Important_2_H"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 />
             <TextView
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="@string/Important_2_Info"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/Black"
                 android:layout_marginRight="@dimen/dimen8"
                 />
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 android:text="@string/Important_3_H"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 />
             <TextView
@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="@string/Important_3_Info"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/Black"
                 android:layout_marginRight="@dimen/dimen8"
                 />
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 android:text="@string/Important_4_H"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 />
             <TextView
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="@string/Important_4_Info"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/Black"
                 android:layout_marginRight="@dimen/dimen8"
                 />
@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 android:text="@string/Important_5_H"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 />
             <TextView
@@ -111,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="@string/Important_5_Info"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/Black"
                 android:layout_marginRight="@dimen/dimen8"
                 />
@@ -120,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 android:text="@string/Important_6_H"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 />
             <TextView
@@ -128,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="@string/Important_6_Info"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/Black"
                 android:layout_marginRight="@dimen/dimen8"
                 />
@@ -137,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 android:text="@string/Important_7_H"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 />
             <TextView
@@ -145,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="@string/Important_7_Info"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/Black"
                 android:layout_marginRight="@dimen/dimen8"
                 />
@@ -154,7 +154,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 android:text="@string/Important_8_H"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 />
             <TextView
@@ -162,7 +162,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="@string/Important_8_Info"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/Black"
                 android:layout_marginRight="@dimen/dimen8"
                 />
@@ -171,7 +171,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 android:text="@string/Important_9_H"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 />
             <TextView
@@ -179,7 +179,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="@string/Important_9_Info"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/Black"
                 android:layout_marginRight="@dimen/dimen8"
                 />
@@ -188,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 android:text="@string/Important_10_H"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 />
             <TextView
@@ -196,7 +196,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="@string/Important_10_Info"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/Black"
                 android:layout_marginRight="@dimen/dimen8"
                 />
@@ -205,7 +205,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 android:text="@string/Important_11_H"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 />
             <TextView
@@ -213,7 +213,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="@string/Important_11_Info"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/Black"
                 android:layout_marginRight="@dimen/dimen8"
                 />

@@ -14,8 +14,13 @@ import android.widget.Toast;
 
 import com.example.projectui.R;
 import com.example.projectui.inhomefragments.FragmentComment;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PostAdapters implements ListAdapter {
     ArrayList<CommentsPojo> arrayList;
@@ -59,7 +64,7 @@ public class PostAdapters implements ListAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
         CommentsPojo subjectData=arrayList.get(position);
         if(convertView==null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
@@ -67,6 +72,8 @@ public class PostAdapters implements ListAdapter {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+
                 }
             });
 
@@ -80,14 +87,26 @@ public class PostAdapters implements ListAdapter {
 
                 @Override
                 public void onClick(View v) {
-                    Log.e("tttt","nmfvbnbv ns dnmv nbfvdsmnbv ,s");
+//                   fragmentComment.getLikeCounter(arrayList.get(position).getNodeId());
+//                   fragmentComment.getIsUserLike(arrayList.get(position).getNodeId());
+                    try {
+
+                        fragmentComment.updateData(arrayList.get(position).getNodeId());
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+
+                    }
+
                 }
             });
 
             txt_user_name.setText(subjectData.getUserId());
             txt_content.setText(subjectData.getCommentContent());
-            like_nombers.setText(String.valueOf(subjectData.getLike_counter()));
-            if (subjectData.is_user_like){
+            like_nombers.setText(String.valueOf(subjectData.getLikeCounter()));
+
+            if (subjectData.isUserLike){
                 love.setImageResource(R.drawable.like_2);
             }else
                 love.setImageResource(R.drawable.like_1);
@@ -110,6 +129,7 @@ public class PostAdapters implements ListAdapter {
     public boolean isEmpty() {
         return false;
     }
+
 
 
 

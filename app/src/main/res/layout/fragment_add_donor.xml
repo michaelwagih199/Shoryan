@@ -142,7 +142,7 @@
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/radioBtn_paymentFree"
+                    android:id="@+id/radioBtn_paymentFreeAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -152,7 +152,7 @@
                     android:textSize="16dp" />
 
                 <RadioButton
-                    android:id="@+id/radioBtn_paymentPaid"
+                    android:id="@+id/radioBtn_paymentPaidAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

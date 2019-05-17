@@ -2,15 +2,24 @@ package com.example.projectui.entities;
 
 public class CommentsPojoAdd {
 
-    private String commentContent,userId;
+    private String nodeId, commentContent,userId;
     int likeCounter;
     boolean isUserLike;
 
-    public CommentsPojoAdd(String commentContent, String userId, int likeCounter, boolean isUserLike) {
+    public CommentsPojoAdd(String nodeId, String commentContent, String userId, int likeCounter, boolean isUserLike) {
+        this.nodeId = nodeId;
         this.commentContent = commentContent;
         this.userId = userId;
         this.likeCounter = likeCounter;
         this.isUserLike = isUserLike;
+    }
+
+    public String getNodeId() {
+        return nodeId;
+    }
+
+    public void setNodeId(String nodeId) {
+        this.nodeId = nodeId;
     }
 
     public String getCommentContent() {

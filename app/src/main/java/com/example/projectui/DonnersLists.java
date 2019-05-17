@@ -30,15 +30,14 @@ import java.util.List;
 public class DonnersLists extends AppCompatActivity {
 
     private static final String TAG = "ViewDatabase";
+    String country,paidType;
 
     //add Firebase Database stuff
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
 
-
     private ListView mListView;
 
-    List<DonorInfomation> movieList;
     ArrayList<DonorInfomation> arrayList = new ArrayList<DonorInfomation>();
 
     @Override
@@ -54,23 +53,37 @@ public class DonnersLists extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
 
+        try {
+            country = getIntent().getStringExtra("COUNTRY");
+            paidType = getIntent().getStringExtra("PAID_TYPE");
+            Log.e("RR",country+"\n"+paidType);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
-
-        Query query = myRef.child("Donors").orderByChild("name");
+        Query query = myRef.child("Donors");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
+                try {
+                    if (dataSnapshot.exists()) {
 
-                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
-                        DonorInfomation note = issue.getValue(DonorInfomation.class);
-                        arrayList.add(note);
+                        for (DataSnapshot issue : dataSnapshot.getChildren()) {
+                            DonorInfomation note = issue.getValue(DonorInfomation.class);
+                            if (note.getCountry().equals(country)&&note.getPaymentType().equals(paidType)){
+                                arrayList.add(note);
+                            }else {
+                                toastMessage("no result");
+                            }
 
+                        }
+    //                   Log.e("tttt",arrayList.get(0).getName()+""+arrayList.get(1).getName());
+                        MyListAdapter customAdapter = new MyListAdapter(getApplicationContext(), arrayList);
+                        mListView.setAdapter(customAdapter);
                     }
-//                   Log.e("tttt",arrayList.get(0).getName()+""+arrayList.get(1).getName());
-                    MyListAdapter customAdapter = new MyListAdapter(getApplicationContext(), arrayList);
-                    mListView.setAdapter(customAdapter);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
@@ -80,19 +93,7 @@ public class DonnersLists extends AppCompatActivity {
             }
         });
 
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // This method is called once with the initial value and again
-//                // whenever data at this location is updated.
-//                showData(dataSnapshot);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
+
 
     }
 

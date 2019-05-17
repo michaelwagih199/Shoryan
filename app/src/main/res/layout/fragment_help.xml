@@ -24,25 +24,26 @@
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 android:text="@string/weHeadin"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="360dp"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="@string/weInfo"
-                android:textAlignment="viewEnd"
-                android:textColor="@color/Black"
                 android:layout_marginRight="@dimen/dimen8"
+                android:text="@string/weInfo"
+                android:textAlignment="center"
+                android:textColor="@color/Black"
+                android:textSize="20sp"
+
                 />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 android:text="@string/hadfnaHeadin"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 />
             <TextView
@@ -50,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="@string/hadfnaInfo"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/Black"
                 android:layout_marginRight="@dimen/dimen8"
                 />
@@ -59,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 android:text="@string/howDoHeadin"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/colorAccent"
                 />
             <TextView
@@ -67,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="@string/howDofnaInfo"
-                android:textAlignment="viewEnd"
+                android:textAlignment="center"
                 android:textColor="@color/Black"
                 android:layout_marginRight="@dimen/dimen8"
                 />

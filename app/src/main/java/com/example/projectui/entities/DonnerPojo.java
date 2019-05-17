@@ -2,7 +2,7 @@ package com.example.projectui.entities;
 
 public class DonnerPojo {
 
-   private String name, mobile,email,age,time,gender,bloodType, country, PaymentType,longitude,latitude;
+   private String name, mobile,email,age,time,gender,bloodType, country, paymentType,longitude,latitude;
 
    public DonnerPojo(String name, String mobile, String email, String age, String time, String gender, String bloodType, String country, String paymentType, String longitude, String latitude) {
       this.name = name;
@@ -13,7 +13,7 @@ public class DonnerPojo {
       this.gender = gender;
       this.bloodType = bloodType;
       this.country = country;
-      this.PaymentType = paymentType;
+      this.paymentType = paymentType;
       this.longitude = longitude;
       this.latitude = latitude;
    }
@@ -83,11 +83,11 @@ public class DonnerPojo {
    }
 
    public String getPaymentType() {
-      return PaymentType;
+      return paymentType;
    }
 
    public void setPaymentType(String paymentType) {
-      PaymentType = paymentType;
+      this.paymentType = paymentType;
    }
 
    public String getLongitude() {

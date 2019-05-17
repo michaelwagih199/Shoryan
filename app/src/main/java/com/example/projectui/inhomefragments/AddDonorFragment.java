@@ -70,7 +70,7 @@ public class AddDonorFragment extends BaseFragment {
     EditText etMob, etName, et_email, et_age, et_time, et_mobile;
     RadioButton radioMale, radioFemale, radioFree, radiopaid;
     Spinner spinnerBlodType, spinnerCountry;
-    String gender,bloodType, country, PaymentType;
+    String gender,bloodType, country;
 
     private DatabaseReference mDatabase;
     private FirebaseAuth firebaseAuth;
@@ -106,8 +106,8 @@ public class AddDonorFragment extends BaseFragment {
 
         radioFemale = (RadioButton) view.findViewById(R.id.radioBtn_female);
         radioMale = (RadioButton) view.findViewById(R.id.radioBtn_male);
-        radioFree = (RadioButton) view.findViewById(R.id.radioBtn_paymentFree);
-        radiopaid = (RadioButton) view.findViewById(R.id.radioBtn_paymentPaid);
+        radioFree = (RadioButton) view.findViewById(R.id.radioBtn_paymentFreeAdd);
+        radiopaid = (RadioButton) view.findViewById(R.id.radioBtn_paymentPaidAdd);
 
         spinnerBlodType = (Spinner) view.findViewById(R.id.spinnerBloodType);
         spinnerCountry = (Spinner) view.findViewById(R.id.spinnerCountry);
@@ -126,13 +126,6 @@ public class AddDonorFragment extends BaseFragment {
                     }
                 });
 
-        //initialize variable from views
-        bloodType = spinnerBlodType.getSelectedItem().toString();
-        country = spinnerCountry.getSelectedItem().toString();
-
-
-
-
         Intent i = new Intent(getContext(), getLocation.class);
         startActivity(i);
 
@@ -150,9 +143,8 @@ public class AddDonorFragment extends BaseFragment {
                                     et_age.getText().toString(),
                                     et_time.getText().toString(),
                                     gender,
-                                    bloodType,
-                                    country,
-                                    PaymentType,
+                                    spinnerBlodType.getSelectedItem().toString(),
+                                    spinnerCountry.getSelectedItem().toString(),
                                     getData()[1],
                                     getData()[0]);
 
@@ -173,10 +165,18 @@ public class AddDonorFragment extends BaseFragment {
     }
 
 
-    public void addDonner(String name, String mobile, String email, String age, String time, String gender, String bloodType, String country, String paymentType, String longitude, String latitude) {
-        DonnerPojo donner = new DonnerPojo(name, mobile, email, age, time, gender, bloodType, country, paymentType, longitude, latitude);
-        mDatabase.child("Donors").child(name).setValue(donner);
-        toastMessage("تم الحفظ");
+    public void addDonner(String name, String mobile, String email, String age, String time, String gender, String bloodType, String country, String longitude, String latitude) {
+        String paymentType = "f";
+        if (radiopaid.isChecked()) {
+            paymentType = "paid";
+        } else if (radioFree.isChecked()) {
+            paymentType = "free";
+        }
+
+            DonnerPojo donner = new DonnerPojo(name, mobile, email, age, time, gender, bloodType, country, paymentType, longitude, latitude);
+            mDatabase.child("Donors").child(name).setValue(donner);
+            toastMessage("تم الحفظ");
+
     }
 
 
@@ -185,11 +185,8 @@ public class AddDonorFragment extends BaseFragment {
             gender = "male";
         } else if (radioFemale.isChecked()) {
             gender = "male";
-        } else if (radiopaid.isChecked()) {
-            PaymentType = "paid";
-        } else if (radioFree.isChecked()) {
-            PaymentType = "free";
-        } else
+        }
+        else
             Toast.makeText(getContext(), "not check", Toast.LENGTH_LONG).show();
     }
 

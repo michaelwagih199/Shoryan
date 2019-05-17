@@ -32,7 +32,7 @@ public class SearchFragment extends BaseFragment {
 
     String country, paidType, method;
     Spinner spinnerCountry;
-    RadioButton radioFree, radiopaid , radioBtn_lists,radioBtn_maps;
+    RadioButton radioFree, radiopaid, radioBtn_lists, radioBtn_maps;
     View view;
 
     @Override
@@ -54,18 +54,30 @@ public class SearchFragment extends BaseFragment {
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        radioData();
                         try {
-                            country = spinnerCountry.getSelectedItem().toString();
-                            radioData();
-                            Intent i = new Intent(getContext(), DonorsMap.class);
-                            startActivity(i);
+
+                            if (radioBtn_maps.isChecked()) {
+                                country = spinnerCountry.getSelectedItem().toString();
+                                Intent intent = new Intent(getContext(), DonorsMap.class);
+                                intent.putExtra("COUNTRY", country);
+                                intent.putExtra("PAID_TYPE", paidType);
+                                startActivity(intent);
+                            }else if (radioBtn_lists.isChecked()){
+                                country = spinnerCountry.getSelectedItem().toString();
+                                Intent intent = new Intent(getContext(), DonnersLists.class);
+                                intent.putExtra("COUNTRY", country);
+                                intent.putExtra("PAID_TYPE", paidType);
+                                startActivity(intent);
+                            }else {
+                                toastMessage("please check all radio button");
+                            }
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 });
-
 
         return view;
     }
@@ -75,12 +87,11 @@ public class SearchFragment extends BaseFragment {
             paidType = "paid";
         } else if (radioFree.isChecked()) {
             paidType = "free";
-        } else if (radioBtn_lists.isChecked()){
+        } else if (radioBtn_lists.isChecked()) {
             method = "list";
-        }else if (radioBtn_maps.isChecked()){
+        } else if (radioBtn_maps.isChecked()) {
             method = "maps";
-        }
-        else {
+        } else {
             Toast.makeText(getContext(), "not check", Toast.LENGTH_LONG).show();
         }
 
@@ -90,7 +101,7 @@ public class SearchFragment extends BaseFragment {
     public void showDialog() {
         new AlertDialog.Builder(getContext())
                 .setTitle("تذكر اختيارك للبحث ")
-                .setMessage(country + "\n"+paidType+"\n"+method)
+                .setMessage(country + "\n" + paidType + "\n" + method)
 
                 // Specifying a listener allows you to take an action before dismissing the dialog.
                 // The dialog is automatically dismissed when a dialog button is clicked.
@@ -105,6 +116,16 @@ public class SearchFragment extends BaseFragment {
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .show();
     }
+
+    /**
+     * customizable toast
+     *
+     * @param message
+     */
+    private void toastMessage(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
 
 
 }

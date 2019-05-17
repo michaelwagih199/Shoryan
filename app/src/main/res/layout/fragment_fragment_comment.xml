@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".inhomefragments.FragmentComment">
+    tools:context=".inhomefragments.FragmentComment"
+    android:id="@+id/id_refresh">
 
     <ListView
         android:id="@+id/listVComments"

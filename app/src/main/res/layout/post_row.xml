@@ -48,8 +48,16 @@
            android:id="@+id/like_nombers"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:text="0"
+           android:text=""
+           android:textAlignment="center"
            android:layout_weight="1"/>
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Like"
+            android:textColor="@color/Pink"
+            android:layout_weight="1"/>
 
     </LinearLayout>
 

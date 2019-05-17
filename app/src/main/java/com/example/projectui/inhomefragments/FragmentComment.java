@@ -3,13 +3,19 @@ package com.example.projectui.inhomefragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -17,8 +23,6 @@ import com.example.projectui.R;
 import com.example.projectui.base.BaseFragment;
 import com.example.projectui.entities.CommentsPojo;
 import com.example.projectui.entities.CommentsPojoAdd;
-import com.example.projectui.entities.DonorInfomation;
-import com.example.projectui.entities.MyListAdapter;
 import com.example.projectui.entities.PostAdapters;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,6 +35,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.UUID;
+
+import static android.support.constraint.Constraints.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,6 +62,7 @@ public class FragmentComment extends BaseFragment {
 
     View view;
     ArrayList<CommentsPojo> arrayList = new ArrayList<CommentsPojo>();
+    ArrayList<CommentsPojo> arrayNew = new ArrayList<CommentsPojo>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,25 +78,30 @@ public class FragmentComment extends BaseFragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        getPostst();
-
-
         FirebaseUser user = firebaseAuth.getCurrentUser();
         curentUser = user.getUid();
         userEmail = user.getEmail();
+        getPostst();
 
         view.findViewById(R.id.fab)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         AddCommentDialog();
-
-
                     }
                 });
 
 
         return view;
+    }
+
+    public void reresh() {
+        // Reload current fragment
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        if (Build.VERSION.SDK_INT >= 26) {
+            ft.setReorderingAllowed(false);
+        }
+        ft.detach(this).attach(this).commit();
     }
 
 
@@ -118,75 +130,17 @@ public class FragmentComment extends BaseFragment {
         });
     }
 
-
-    public void getLikeCounter() {
-
-        Query query = databaseReference.child("Posts").orderByChild("userId");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-
-                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
-                        CommentsPojo note = issue.getValue(CommentsPojo.class);
-                        likeCounter = note.getLike_counter();
-                    }
-//                   Log.e("tttt",arrayList.get(0).getName()+""+arrayList.get(1).getName());
-                    PostAdapters customAdapter = new PostAdapters(getContext(), arrayList);
-                    listVComments.setAdapter(customAdapter);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e("ram", databaseError.getDetails());
-            }
-        });
-
-
-    }
-
-    public boolean getIsUserLike() {
-        final boolean[] result = new boolean[1];
-        Query query = databaseReference.child("Posts").orderByChild("userId");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-
-                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
-                        CommentsPojo note = issue.getValue(CommentsPojo.class);
-                        result[0] = note.isIs_user_like();
-                    }
-//                   Log.e("tttt",arrayList.get(0).getName()+""+arrayList.get(1).getName());
-                    PostAdapters customAdapter = new PostAdapters(getContext(), arrayList);
-                    listVComments.setAdapter(customAdapter);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e("ram", databaseError.getDetails());
-            }
-        });
-        return result[0];
-    }
-
     public void AddCommentDialog() {
-
         // get prompts.xml view
         LayoutInflater li = LayoutInflater.from(getContext());
         View promptsView = li.inflate(R.layout.prompts, null);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 getContext());
-
         // set prompts.xml to alertdialog builder
         alertDialogBuilder.setView(promptsView);
-
         final EditText userInput = (EditText) promptsView
                 .findViewById(R.id.editTextDialogUserInput);
-
         // set dialog message
         alertDialogBuilder
                 .setCancelable(false)
@@ -196,15 +150,12 @@ public class FragmentComment extends BaseFragment {
                                 // get user input and set it to result
                                 // edit text
                                 try {
-                                    getIsUserLike();
-                                    getLikeCounter();
-                                    addPost(userInput.getText().toString(), likeCounter, isUserLike);
+                                    addPost(generateCode(), userInput.getText().toString(), likeCounter, isUserLike);
                                     arrayList.clear();
                                     getPostst();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-
                             }
                         })
                 .setNegativeButton("Cancel",
@@ -216,23 +167,125 @@ public class FragmentComment extends BaseFragment {
 
         // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();
-
         // show it
         alertDialog.show();
-
     }
 
-
-
-
-    public void addPost(String commentContent, int likeCounter, boolean isUserLike) {
+    public void addPost(String nodeId, String commentContent, int likeCounter, boolean isUserLike) {
         try {
-            CommentsPojoAdd commentsPojoAdd = new CommentsPojoAdd(commentContent, curentUser, likeCounter, isUserLike);
-            databaseReference.child("Posts").child(generateCode()).setValue(commentsPojoAdd);
+            CommentsPojoAdd commentsPojoAdd = new CommentsPojoAdd(nodeId, commentContent, curentUser, likeCounter, isUserLike);
+            databaseReference.child("Posts").child(nodeId).setValue(commentsPojoAdd);
             toastMessage("تم الحفظ");
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void updateData(String nodeId) {
+
+
+        getIsUserLike(nodeId);
+        getLikeCounter(nodeId);
+
+        FirebaseDatabase mFirebaseDatabase;
+        DatabaseReference databaseReference;
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = mFirebaseDatabase.getReference().child("Posts");
+        databaseReference.child(nodeId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!isUserLike) {
+                    dataSnapshot.getRef().child("likeCounter").setValue(likeCounter + 1);
+                    dataSnapshot.getRef().child("userLike").setValue(true);
+
+
+                } else {
+                    dataSnapshot.getRef().child("likeCounter").setValue(likeCounter - 1);
+                    dataSnapshot.getRef().child("userLike").setValue(false);
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("User", databaseError.getMessage());
+            }
+        });
+
+    }
+
+    public void test(){
+
+        DatabaseReference zonesRef = FirebaseDatabase.getInstance().getReference("Posts");
+        Query query = zonesRef;
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
+                        CommentsPojo note = issue.getValue(CommentsPojo.class);
+                        note.setUserId(userEmail);
+                        arrayNew.add(note);
+                    }
+//                   Log.e("tttt",arrayList.get(0).getName()+""+arrayList.get(1).getName());
+                    PostAdapters customAdapter = new PostAdapters(getContext(), arrayNew);
+                    listVComments.setAdapter(customAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("ram", databaseError.getDetails());
+            }
+        });
+    }
+
+
+
+    public void getLikeCounter(final String id) {
+        DatabaseReference zonesRef = FirebaseDatabase.getInstance().getReference("Posts").child(id);
+        Query query = zonesRef;
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    CommentsPojo note = dataSnapshot.getValue(CommentsPojo.class);
+                    likeCounter = note.getLikeCounter();
+                    Log.e("JJ", likeCounter + "");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("ram", databaseError.getDetails());
+            }
+        });
+
+    }
+
+    public void getIsUserLike(String id) {
+        final boolean[] result = new boolean[1];
+        DatabaseReference zonesRef = FirebaseDatabase.getInstance().getReference("Posts").child(id);
+        Query query = zonesRef;
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    CommentsPojo note = dataSnapshot.getValue(CommentsPojo.class);
+                    isUserLike = note.isUserLike();
+                    Log.e("ZZ", isUserLike + "");
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("ram", databaseError.getDetails());
+            }
+        });
+
     }
 
     public String generateCode() {
